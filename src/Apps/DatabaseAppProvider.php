@@ -2,8 +2,6 @@
 
 namespace BeyondCode\LaravelWebSockets\Apps;
 
-use BeyondCode\LaravelWebSockets\Apps\App;
-use BeyondCode\LaravelWebSockets\Apps\AppProvider;
 use BeyondCode\LaravelWebSockets\Models\DatabaseApp;
 
 class DatabaseAppProvider implements AppProvider
@@ -17,17 +15,17 @@ class DatabaseAppProvider implements AppProvider
 
     public function findById($appId): ?App
     {
-        return $this->instanciate(DatabaseApp::find($appId)->toArray() ?? null);
+        return $this->instanciate(optional(DatabaseApp::find($appId))->toArray() ?? null);
     }
 
     public function findByKey(string $appKey): ?App
     {
-        return $this->instanciate(DatabaseApp::where('key', $appKey)->first()->toArray() ?? null);
+        return $this->instanciate(optional(DatabaseApp::where('key', $appKey)->first())->toArray() ?? null);
     }
 
     public function findBySecret(string $appSecret): ?App
     {
-        return $this->instanciate(DatabaseApp::where('secret', $appSecret)->first()->toArray() ?? null);
+        return $this->instanciate(optional(DatabaseApp::where('secret', $appSecret)->first())->toArray() ?? null);
     }
 
     protected function instanciate(?array $appAttributes): ?App
